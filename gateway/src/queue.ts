@@ -2,40 +2,63 @@ import rabbit, { Channel, Connection } from "amqplib";
 import { rabbitmqServer } from "./config";
 import { QueueExchanges, QueueNames } from "./utils";
 
-export default class Producer {
-  private channel: Channel | null = null;
-  private connection: Connection | null = null;
+export default class Queue {
+  public static channel: Channel | null = null;
+  public static connection: Connection | null = null; // Make connection static
 
-  private async channelCreate(): Promise<void> {
-    if (!this.connection) {
-      this.connection = await rabbit.connect(rabbitmqServer);
-    }
+  public static async channelCreate(): Promise<void> {
+    try {
+      if (!Queue.connection) {
+        Queue.connection = await rabbit.connect(rabbitmqServer); // Use Queue.connection
+        console.log("Connected to RabbitMQ server.");
+      }
 
-    if (!this.channel) {
-      this.channel = await this.connection.createChannel();
+      if (!Queue.channel) {
+        Queue.channel = await Queue.connection.createChannel();
+      }
+    } catch (err: Error | any) {
+      console.error("Failed to create channel or connection:", err);
+      throw err;
     }
   }
 
-  public async publishMessage(
-    exchange: QueueExchanges,
+  public static async publishMessage(
     queue: QueueNames,
     data: any
   ): Promise<void> {
-    if (!this.channel) {
-      await this.channelCreate();
+    if (!Queue.channel) {
+      await Queue.channelCreate();
     }
 
-    await this.channel?.assertExchange(exchange, "direct");
-    this.channel?.publish(exchange, queue, Buffer.from(data));
+    await Queue.channel?.assertExchange(QueueExchanges.DIRECT, "direct");
+    Queue.channel?.publish(
+      QueueExchanges.DIRECT,
+      queue,
+      Buffer.from(JSON.stringify(data))
+    );
   }
 
-  // Graceful shutdown (optional)
+  public async consumeNewOrderMessage() {
+    await Queue.channel?.assertQueue(QueueNames.NEW_ORDER, {
+      durable: true,
+    });
+
+    await Queue.channel?.bindQueue(
+      QueueNames.NEW_ORDER,
+      QueueExchanges.DIRECT,
+      "error"
+    );
+
+    Queue.channel?.consume(QueueNames.NEW_ORDER, (msg) => {});
+  }
+
   public async closeConnection(): Promise<void> {
-    if (this.channel) {
-      await this.channel.close();
+    if (Queue.channel) {
+      await Queue.channel.close();
     }
-    if (this.connection) {
-      await this.connection.close();
+    if (Queue.connection) {
+      // Use Queue.connection
+      await Queue.connection.close();
     }
   }
 }

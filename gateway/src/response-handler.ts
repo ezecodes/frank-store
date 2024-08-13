@@ -8,7 +8,7 @@ class SuccessHandler {
   ): ApiResponse<T> {
     return {
       success: true,
-      statusCode: 200,
+      status_code: 200,
       message,
       data,
       error: null,
@@ -22,7 +22,7 @@ class SuccessHandler {
   ): ApiResponse<T> {
     return {
       success: true,
-      statusCode: 201,
+      status_code: 201,
       message,
       data,
       error: null,
@@ -70,7 +70,7 @@ class ApiError extends Error {
   public toApiResponse(): ApiResponse<null> {
     return {
       success: false,
-      statusCode: this.statusCode,
+      status_code: this.statusCode,
       message: this.message,
       data: null,
       error: {

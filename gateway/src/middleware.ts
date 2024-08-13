@@ -46,12 +46,12 @@ function errorMiddleware(
 ): void {
   if (error instanceof ApiError) {
     const response = error.toApiResponse();
-    res.status(response.statusCode).json(response);
+    res.status(response.status_code).json(response);
   } else {
     // Handle unexpected errors
     const response = {
       success: false,
-      statusCode: 500,
+      status_code: 500,
       message: "Internal Server Error",
       data: null,
       error: {

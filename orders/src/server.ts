@@ -1,19 +1,17 @@
 import express, { Application } from "express";
-import Consumer from "./queue";
+import Queue from "./queue";
 
 class Server {
   private app: Application;
   private port: number;
-  private consumer: Consumer;
   constructor(port: number) {
     this.app = express();
     this.port = port;
-    this.consumer = new Consumer();
+    Queue.consumeNewOrderMessage();
 
     this.initializeMiddlewares();
     this.initializeRoutes();
     this.initializeErrorHandling();
-    this.initializeConsumers();
   }
 
   private initializeMiddlewares() {
@@ -21,9 +19,6 @@ class Server {
   }
   private initializeRoutes() {}
   private initializeErrorHandling(): void {}
-  private initializeConsumers(): void {
-    this.consumer.consumeNewOrderMessage();
-  }
 
   public listen(): void {
     this.app.listen(this.port, () => {

@@ -1,21 +1,12 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { SuccessHandler } from "./response-handler";
-import Producer from "./queue";
-import { QueueExchanges, QueueNames } from "./utils";
+import Queue from "./queue";
+import { QueueNames } from "./utils";
 
 export class OrderController {
-  private producer: Producer;
-  constructor() {
-    this.producer = new Producer();
-  }
-
-  public createOrder(req: Request, res: Response, next: NextFunction): void {
-    this.producer.publishMessage(
-      QueueExchanges.DIRECT,
-      QueueNames.NEW_ORDER,
-      req.body
-    );
+  public async createOrder(req: Request, res: Response): Promise<void> {
+    await Queue.publishMessage(QueueNames.NEW_ORDER, req.body);
     const response = SuccessHandler.ok({}, "Hello from the order API!");
-    res.status(response.statusCode).json(response);
+    res.status(response.status_code).json(response);
   }
 }
