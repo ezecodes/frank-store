@@ -1,29 +1,29 @@
 {
-  "name": "rabb",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "start": "npm-run-all --parallel start:*",
-    "start:orders": "npm --workspace=orders run start",
-    "start:invoices": "npm --workspace=invoices run start",
-    "start:gateway": "npm --workspace=gateway run start",
-    "dev": "npm-run-all --parallel dev:*",
-    "dev:orders": "npm --workspace=orders run dev",
-    "dev:invoices": "npm --workspace=invoices run dev",
-    "dev:gateway": "npm --workspace=gateway run dev",
-    "build": "npm-run-all --parallel build:*",
-    "build:orders": "npm --workspace=orders run build",
-    "build:invoices": "npm --workspace=invoices run build",
-    "build:gateway": "npm --workspace=gateway run build"
-  },
-  "workspaces": [
-    "/*"
-  ],
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "npm-run-all": "^4.1.5"
-  }
+   "name": "rabb",
+   "version": "1.0.0",
+   "main": "index.js",
+   "scripts": {
+      "start": "ts-node src/index.ts",
+      "start:orders": "npm --workspace=orders run start",
+      "start:invoices": "npm --workspace=invoices run start",
+      "start:gateway": "npm --workspace=gateway run start",
+      "dev": "npm-run-all --parallel dev:*",
+      "dev:orders": "npm --workspace=orders run dev",
+      "dev:invoices": "npm --workspace=invoices run dev",
+      "dev:gateway": "npm --workspace=gateway run dev",
+      "build": "npm-run-all --parallel build:*",
+      "build:orders": "npm --workspace=orders run build",
+      "build:invoices": "npm --workspace=invoices run build",
+      "build:gateway": "npm --workspace=gateway run build"
+   },
+   "workspaces": [
+      "/*"
+   ],
+   "keywords": [],
+   "author": "",
+   "license": "ISC",
+   "description": "",
+   "devDependencies": {
+      "npm-run-all": "^4.1.5"
+   }
 }

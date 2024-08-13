@@ -26,9 +26,7 @@ export default class Queue {
     queue: QueueNames,
     data: any
   ): Promise<void> {
-    if (!Queue.channel) {
-      await Queue.channelCreate();
-    }
+    await Queue.channelCreate();
 
     await Queue.channel?.assertExchange(QueueExchanges.DIRECT, "direct");
     Queue.channel?.publish(
@@ -36,20 +34,6 @@ export default class Queue {
       queue,
       Buffer.from(JSON.stringify(data))
     );
-  }
-
-  public async consumeNewOrderMessage() {
-    await Queue.channel?.assertQueue(QueueNames.NEW_ORDER, {
-      durable: true,
-    });
-
-    await Queue.channel?.bindQueue(
-      QueueNames.NEW_ORDER,
-      QueueExchanges.DIRECT,
-      "error"
-    );
-
-    Queue.channel?.consume(QueueNames.NEW_ORDER, (msg) => {});
   }
 
   public async closeConnection(): Promise<void> {

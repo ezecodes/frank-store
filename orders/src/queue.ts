@@ -40,12 +40,16 @@ export default class Queue {
     await Queue.channel?.bindQueue(
       QueueNames.NEW_ORDER,
       QueueExchanges.DIRECT,
-      "error"
+      QueueNames.NEW_ORDER
     );
 
-    Queue.channel?.consume(QueueNames.NEW_ORDER, (msg) => {
-      console.log(msg);
-    });
+    Queue.channel?.consume(
+      QueueNames.NEW_ORDER,
+      (msg) => {
+        Queue.channel?.ack(msg as any);
+      },
+      { noAck: false }
+    );
   }
 
   public async closeConnection(): Promise<void> {
