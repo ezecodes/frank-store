@@ -15,3 +15,9 @@ export enum ErrorCodes {
   GENERAL_INTERNAL_ERROR = "GEN-001",
   GENERAL_NOT_FOUND = "GEN-002",
 }
+export enum QueueExchanges {
+  DIRECT = "exch_direct",
+}
+export enum QueueNames {
+  NEW_ORDER = "NEW_ORDER",
+}

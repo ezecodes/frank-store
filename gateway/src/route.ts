@@ -5,13 +5,13 @@ import { z } from "zod";
 import { Request } from "express";
 
 const createOrderSchema = z.object({
-  productId: z
+  product_id: z
     .string({ message: "Missing Product ID" })
     .uuid({ message: "Invalid Product ID" }),
   quantity: z
     .number({ message: "Missing product quantity" })
     .min(1, { message: "Product quantity must not be greater than one" }),
-  deliveryDate: z.date().optional(),
+  delivery_date: z.date().optional(),
 });
 
 export default class ApiRoutes {
