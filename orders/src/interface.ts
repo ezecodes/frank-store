@@ -12,12 +12,24 @@ export interface OrderCreation {
     };
     items: {
       product_id: string;
-      product_name: string;
+      name: string;
       quantity: number;
       price: number;
       currency: string;
+      images: string[];
     }[];
   };
+}
+
+export interface OrderItemAttributes {
+  id: string;
+  product_id: string;
+  name: string;
+  images: string[];
+  quantity: number;
+  order_id: string;
+  price: number;
+  currency: string;
 }
 
 export interface OrderAttributes {

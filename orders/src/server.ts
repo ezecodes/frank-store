@@ -1,6 +1,8 @@
 import express, { Application } from "express";
 import Queue from "./queue";
 import { sequelize } from "../models";
+import Orders from "../models/Orders";
+import OrderItems from "../models/OrderItems";
 
 class Server {
   private app: Application;
@@ -21,9 +23,15 @@ class Server {
   private initializeRoutes() {}
   private initializeErrorHandling(): void {}
 
+  private intializeModelAssoc() {
+    Orders.hasMany(OrderItems, { foreignKey: "order_id" });
+    OrderItems.belongsTo(Orders);
+  }
+
   public async connectDatabase() {
     try {
       await sequelize.authenticate();
+      this.intializeModelAssoc();
       console.log("Orders Database Connected");
     } catch (err) {
       throw err;
