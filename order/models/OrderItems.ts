@@ -12,7 +12,7 @@ interface OrderItemInstance
   updatedAt?: Date;
 }
 
-export default sequelize.define<OrderItemInstance>("OrderItem", {
+export default sequelize.define<OrderItemInstance>("OrderItems", {
   id: {
     primaryKey: true,
     type: DataTypes.UUID,
@@ -36,6 +36,10 @@ export default sequelize.define<OrderItemInstance>("OrderItem", {
     allowNull: false,
   },
   order_id: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  invoice_id: {
     type: DataTypes.UUID,
     allowNull: false,
   },

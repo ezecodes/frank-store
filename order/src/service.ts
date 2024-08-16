@@ -18,16 +18,16 @@ export default class OrderService {
         { returning: true, transaction: t }
       );
 
-      order.data.items.map(
+      order.data.items.forEach(
         async (item) =>
           await OrderItems.create(
-            { ...item, order_id: data.id },
+            { ...item, order_id: data.id, invoice_id: data.id },
             { returning: true, transaction: t }
           )
       );
       return data;
     });
 
-    Queue.publishMessage(QueueNames.OrderNotifications, data);
+    Queue.publishMessage(QueueNames.OrderCreated, data);
   }
 }

@@ -1,7 +1,4 @@
-import { join } from "path";
 import { Sequelize } from "sequelize";
-
-const env = process.env.NODE_ENV || "development";
 import config from "../config";
 
 const sequelize = new Sequelize(

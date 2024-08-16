@@ -28,6 +28,7 @@ export interface OrderItemAttributes {
   images: string[];
   quantity: number;
   order_id: string;
+  invoice_id: string;
   price: number;
   currency: string;
 }

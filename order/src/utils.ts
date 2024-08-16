@@ -4,5 +4,5 @@ export enum QueueExchanges {
 export enum QueueNames {
   OrderCreation = "OrderCreation",
   InvoiceCreation = "InvoiceCreation",
-  OrderNotifications = "OrderNotifications",
+  OrderCreated = "OrderCreated",
 }

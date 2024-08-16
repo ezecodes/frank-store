@@ -4,17 +4,17 @@
    "main": "index.js",
    "scripts": {
       "start": "npm-run-all --parallel start:*",
-      "start:orders": "npm --workspace=orders run start",
-      "start:invoices": "npm --workspace=invoices run start",
+      "start:order": "npm --workspace=order run start",
+      "start:notification": "npm --workspace=notification run start",
       "start:gateway": "npm --workspace=gateway run start",
       "dev": "npm-run-all --parallel dev:*",
-      "dev:orders": "npm --workspace=orders run dev",
-      "dev:invoices": "npm --workspace=invoices run dev",
+      "dev:order": "npm --workspace=order run dev",
+      "dev:notification": "npm --workspace=notification run dev",
       "dev:gateway": "npm --workspace=gateway run dev",
       "build": "npm-run-all --parallel build:*",
-      "build:orders": "npm --workspace=orders run build",
-      "build:invoices": "npm --workspace=invoices run build",
-      "build:gateway": "npm --workspace=gateway run build"
+      "build:order": "npm --workspace=order run build",
+      "build:notification": "npm --workspace=notification run build",
+      "build:gateway": "npm --workspace=gateway run build" 
    },
    "workspaces": [
       "/**"
@@ -24,13 +24,6 @@
    "license": "ISC",
    "description": "",
    "devDependencies": {
-      "npm-run-all": "^4.1.5",
-      "sequelize-cli": "^6.6.2"
-   },
-   "dependencies": {
-      "dotenv": "^16.4.5",
-      "pg": "^8.12.0",
-      "sequelize": "^6.37.3",
-      "sequelize-typescript": "^2.1.6"
+      "npm-run-all": "^4.1.5"
    }
 }
