@@ -1,2 +1,2 @@
 # frank-store
-VR Powered E-commerce store front
+3D rendered E-commerce store front
