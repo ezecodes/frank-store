@@ -1,10 +1,22 @@
+import { join } from "path";
 import { Sequelize } from "sequelize";
 
 const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/../../config.js")[env];
+import config from "../config";
 
-const sequelize = config.url
-  ? new Sequelize(config.url, config)
-  : new Sequelize(config.database, config.username, config.password, config);
+const sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  {
+    dialect: "postgres",
+    pool: {
+      max: 1000,
+      min: 0,
+      acquire: 60000,
+      idle: 10000,
+    },
+  }
+);
 
 export { Sequelize, sequelize };

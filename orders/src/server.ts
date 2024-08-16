@@ -1,5 +1,6 @@
 import express, { Application } from "express";
 import Queue from "./queue";
+import { sequelize } from "../models";
 
 class Server {
   private app: Application;
@@ -19,6 +20,15 @@ class Server {
   }
   private initializeRoutes() {}
   private initializeErrorHandling(): void {}
+
+  public async connectDatabase() {
+    try {
+      await sequelize.authenticate();
+      console.log("Orders Database Connected");
+    } catch (err) {
+      throw err;
+    }
+  }
 
   public listen(): void {
     this.app.listen(this.port, () => {
