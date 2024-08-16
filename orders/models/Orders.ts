@@ -1,126 +1,70 @@
-import {
-  Table,
-  Column,
-  Model,
-  DataType,
-  PrimaryKey,
-} from "sequelize-typescript";
+import { DataTypes, Model, Optional } from "sequelize";
+import { OrderAttributes } from "../src/interface";
+import { sequelize } from ".";
 
-@Table({
-  tableName: "orders",
-  timestamps: true,
-  modelName: "Orders",
-})
-export class Orders extends Model<Orders> {
-  @PrimaryKey
-  @Column({
-    type: DataType.UUID,
-    defaultValue: DataType.UUIDV4,
-  })
-  declare id: string;
+interface OrderCreationAttributes extends Optional<OrderAttributes, "id"> {}
 
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-    defaultValue: "Pending",
-  })
-  status!: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  full_name!: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-    unique: true,
-  })
-  email!: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  phone_number!: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  address_line1!: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  city!: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  state!: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  postal_code!: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  country!: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  customer_id!: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  invoice_id!: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  tracking_id!: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: true,
-  })
-  payment_id!: string | null;
-
-  @Column({
-    type: DataType.TEXT,
-    allowNull: true,
-  })
-  additional_info!: string | null;
-
-  @Column({
-    type: DataType.TEXT,
-    allowNull: true,
-  })
-  delivery_note!: string | null;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: true,
-  })
-  address_line2!: string | null;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: true,
-  })
-  address_line3!: string | null;
+interface OrderInstance
+  extends Model<OrderAttributes, OrderCreationAttributes>,
+    OrderAttributes {
+  createdAt?: Date;
+  updatedAt?: Date;
 }
-export default Orders;
+
+export default sequelize.define<OrderInstance>("Orders", {
+  id: {
+    primaryKey: true,
+    type: DataTypes.UUID,
+    unique: true,
+    defaultValue: DataTypes.UUIDV4,
+  },
+  status: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  address_line1: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  city: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  state: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  postal_code: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  country: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  customer_id: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  invoice_id: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  tracking_id: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  payment_id: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  delivery_note: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  address_line2: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  address_line3: { type: DataTypes.STRING, allowNull: true },
+});

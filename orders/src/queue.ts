@@ -33,20 +33,21 @@ export default class Queue {
 
   public static async consumeNewOrderMessage() {
     await Queue.channelCreate();
-    await Queue.channel?.assertQueue(QueueNames.NEW_ORDER, {
+    await Queue.channel?.assertQueue(QueueNames.InvoiceCreation, {
       durable: true,
     });
 
     await Queue.channel?.bindQueue(
-      QueueNames.NEW_ORDER,
+      QueueNames.InvoiceCreation,
       QueueExchanges.DIRECT,
-      QueueNames.NEW_ORDER
+      QueueNames.InvoiceCreation
     );
 
     Queue.channel?.consume(
-      QueueNames.NEW_ORDER,
+      QueueNames.InvoiceCreation,
       (msg) => {
-        Queue.channel?.ack(msg as any);
+        console.log();
+        // Queue.channel?.ack(msg as any);
       },
       { noAck: false }
     );
