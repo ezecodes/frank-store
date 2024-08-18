@@ -21,7 +21,7 @@ export default class Queue {
     }
   }
 
-  public static async consumeCreateOrderNotifications() {
+  public static async consumeOrderCreated() {
     await Queue.channelCreate();
     await Queue.channel?.assertQueue(SubscriberQueues.OrderCreated, {
       durable: true,
@@ -35,6 +35,27 @@ export default class Queue {
 
     Queue.channel?.consume(
       SubscriberQueues.OrderCreated,
+      (msg) => {
+        console.log();
+        // Queue.channel?.ack(msg as any);
+      },
+      { noAck: false }
+    );
+  }
+  public static async consumeUserCreated() {
+    await Queue.channelCreate();
+    await Queue.channel?.assertQueue(SubscriberQueues.UserCreated, {
+      durable: true,
+    });
+
+    await Queue.channel?.bindQueue(
+      SubscriberQueues.UserCreated,
+      QueueExchanges.DIRECT,
+      SubscriberQueues.UserCreated
+    );
+
+    Queue.channel?.consume(
+      SubscriberQueues.UserCreated,
       (msg) => {
         console.log();
         // Queue.channel?.ack(msg as any);

@@ -1,6 +1,6 @@
 import rabbit, { Channel, Connection } from "amqplib";
 import { rabbitmqServer } from "./config";
-import { QueueExchanges, PublisherQueues } from "./utils";
+import { QueueExchanges, PublisherQueues, SubscriberQueues } from "./utils";
 export default class Queue {
   public static channel: Channel | null = null;
   public static connection: Connection | null = null;
@@ -29,6 +29,28 @@ export default class Queue {
 
     await Queue.channel?.assertExchange(QueueExchanges.DIRECT, "direct");
     Queue.channel?.publish(QueueExchanges.DIRECT, queue, Buffer.from(data));
+  }
+
+  public static async consumeUserCreation() {
+    await Queue.channelCreate();
+    await Queue.channel?.assertQueue(SubscriberQueues.UserCreation, {
+      durable: true,
+    });
+
+    await Queue.channel?.bindQueue(
+      SubscriberQueues.UserCreation,
+      QueueExchanges.DIRECT,
+      SubscriberQueues.UserCreation
+    );
+
+    Queue.channel?.consume(
+      SubscriberQueues.UserCreation,
+      (msg) => {
+        console.log();
+        // Queue.channel?.ack(msg as any);
+      },
+      { noAck: false }
+    );
   }
 
   public async closeConnection(): Promise<void> {

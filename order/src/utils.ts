@@ -1,8 +1,6 @@
 export enum QueueExchanges {
   DIRECT = "exch_direct",
 }
-export enum QueueNames {
-  OrderCreation = "OrderCreation",
-  InvoiceCreation = "InvoiceCreation",
+export enum PublisherQueues {
   OrderCreated = "OrderCreated",
 }

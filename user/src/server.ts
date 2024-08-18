@@ -1,7 +1,6 @@
 import express, { Application } from "express";
+import Queue from "./queue";
 import { sequelize } from "../models";
-import Orders from "../models/Orders";
-import OrderItems from "../models/OrderItems";
 
 class Server {
   private app: Application;
@@ -9,6 +8,7 @@ class Server {
   constructor(port: number) {
     this.app = express();
     this.port = port;
+    Queue.consumeUserCreation();
 
     this.initializeMiddlewares();
     this.initializeRoutes();
@@ -21,16 +21,10 @@ class Server {
   private initializeRoutes() {}
   private initializeErrorHandling(): void {}
 
-  private intializeModelAssoc() {
-    Orders.hasMany(OrderItems, { foreignKey: "order_id" });
-    OrderItems.belongsTo(Orders, { foreignKey: "order_id" });
-  }
-
   public async connectDatabase() {
     try {
       await sequelize.authenticate();
-      this.intializeModelAssoc();
-      console.log("Orders Database Connected");
+      console.log("Users Database Connected");
     } catch (err) {
       throw err;
     }

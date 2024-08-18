@@ -8,7 +8,8 @@ class Server {
   constructor(port: number) {
     this.app = express();
     this.port = port;
-    Queue.consumeCreateOrderNotifications();
+    Queue.consumeOrderCreated();
+    Queue.consumeUserCreated();
 
     this.initializeMiddlewares();
     this.initializeRoutes();

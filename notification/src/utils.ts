@@ -4,4 +4,5 @@ export enum QueueExchanges {
 export enum PublisherQueues {}
 export enum SubscriberQueues {
   OrderCreated = "OrderCreated",
+  UserCreated = "UserCreated",
 }

@@ -3,18 +3,24 @@
    "version": "1.0.0",
    "main": "index.js",
    "scripts": {
+      "dev": "npm-run-all --parallel dev:*",
       "start": "npm-run-all --parallel start:*",
+      "build": "npm-run-all --parallel build:*",
+      
       "start:order": "npm --workspace=order run start",
       "start:notification": "npm --workspace=notification run start",
       "start:gateway": "npm --workspace=gateway run start",
-      "dev": "npm-run-all --parallel dev:*",
+      "start:user": "npm --workspace=user run start",
+
       "dev:order": "npm --workspace=order run dev",
       "dev:notification": "npm --workspace=notification run dev",
       "dev:gateway": "npm --workspace=gateway run dev",
-      "build": "npm-run-all --parallel build:*",
+      "dev:user": "npm --workspace=user run dev",
+
       "build:order": "npm --workspace=order run build",
       "build:notification": "npm --workspace=notification run build",
-      "build:gateway": "npm --workspace=gateway run build" 
+      "build:gateway": "npm --workspace=gateway run build",
+      "build:user": "npm --workspace=user run build" 
    },
    "workspaces": [
       "/**"
