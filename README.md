@@ -1,2 +1,2 @@
 # frank-store
-3D rendered E-commerce store front
+Nodejs micro services for e-commerce store front
